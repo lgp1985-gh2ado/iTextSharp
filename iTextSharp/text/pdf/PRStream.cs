@@ -101,11 +101,15 @@ public class PRStream : PdfStream {
         this.reader = reader;
         this.offset = -1;
         if (Document.Compress) {
-            MemoryStream stream = new MemoryStream();
-            ZDeflaterOutputStream zip = new ZDeflaterOutputStream(stream, compressionLevel);
-            zip.Write(conts, 0, conts.Length);
-            zip.Close();
-            bytes = stream.ToArray();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                using (ZDeflaterOutputStream zip = new ZDeflaterOutputStream(stream, compressionLevel))
+                {
+                    zip.Write(conts, 0, conts.Length);
+                    zip.Close();
+                }
+                bytes = stream.ToArray();
+            }
             Put(PdfName.FILTER, PdfName.FLATEDECODE);
         }
         else
@@ -140,11 +144,15 @@ public class PRStream : PdfStream {
         Remove(PdfName.FILTER);
         this.offset = -1;
         if (Document.Compress && compress) {
-            MemoryStream stream = new MemoryStream();
-            ZDeflaterOutputStream zip = new ZDeflaterOutputStream(stream, compressionLevel);
-            zip.Write(data, 0, data.Length);
-            zip.Close();
-            bytes = stream.ToArray();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                using (ZDeflaterOutputStream zip = new ZDeflaterOutputStream(stream, compressionLevel))
+                {
+                    zip.Write(data, 0, data.Length);
+                    zip.Close();
+                }
+                bytes = stream.ToArray();
+            }
             this.compressionLevel = compressionLevel;
             Put(PdfName.FILTER, PdfName.FLATEDECODE);
         }

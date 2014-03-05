@@ -322,19 +322,22 @@ namespace iTextSharp.text.pdf.parser {
         private void DisplayXObject(PdfName xobjectName) {
             PdfDictionary xobjects = resources.GetAsDict(PdfName.XOBJECT);
             PdfObject xobject = xobjects.GetDirectObject(xobjectName);
-            PdfStream xobjectStream = (PdfStream)xobject;
-            
-            PdfName subType = xobjectStream.GetAsName(PdfName.SUBTYPE);
-            if (xobject.IsStream()){
-                IXObjectDoHandler handler;
-                xobjectDoHandlers.TryGetValue(subType, out handler);
-                if (handler == null)
-                    handler = xobjectDoHandlers[PdfName.DEFAULT];
-                handler.HandleXObject(this, xobjectStream, xobjects.GetAsIndirectObject(xobjectName));
-            } else {
-                throw new InvalidOperationException(MessageLocalization.GetComposedMessage("XObject.1.is.not.a.stream", xobjectName));
+            using (PdfStream xobjectStream = (PdfStream)xobject)
+            {
+                PdfName subType = xobjectStream.GetAsName(PdfName.SUBTYPE);
+                if (xobject.IsStream())
+                {
+                    IXObjectDoHandler handler;
+                    xobjectDoHandlers.TryGetValue(subType, out handler);
+                    if (handler == null)
+                        handler = xobjectDoHandlers[PdfName.DEFAULT];
+                    handler.HandleXObject(this, xobjectStream, xobjects.GetAsIndirectObject(xobjectName));
+                }
+                else
+                {
+                    throw new InvalidOperationException(MessageLocalization.GetComposedMessage("XObject.1.is.not.a.stream", xobjectName));
+                }
             }
-            
         }
 
         /**
