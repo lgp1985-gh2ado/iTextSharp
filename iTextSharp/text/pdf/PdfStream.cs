@@ -74,7 +74,7 @@ namespace iTextSharp.text.pdf {
      * @see        PdfDictionary
      */
 
-    public class PdfStream : PdfDictionary {
+    public class PdfStream : PdfDictionary, IDisposable {
     
         // membervariables
     
@@ -352,6 +352,12 @@ namespace iTextSharp.text.pdf {
         public override String ToString() {
             if (Get(PdfName.TYPE) == null) return "Stream";
             return "Stream of type: " + Get(PdfName.TYPE);
+        }
+
+        public void Dispose()
+        {
+            if (this.streamBytes!=null)
+                this.streamBytes.Dispose();
         }
     }
 }
