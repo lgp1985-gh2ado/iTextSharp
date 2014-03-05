@@ -46,7 +46,8 @@ using iTextSharp.text.pdf;
  * For more information, please contact iText Software Corp. at this
  * address: sales@itextpdf.com
  */
-namespace iTextSharp.text.pdf.parser {
+namespace iTextSharp.text.pdf.parser
+{
 
     /**
      * Provides information and calculations needed by render listeners
@@ -56,8 +57,9 @@ namespace iTextSharp.text.pdf.parser {
      * {@link RenderListener} objects as text rendering operations are
      * discovered
      */
-    public class TextRenderInfo {
-        
+    public class TextRenderInfo
+    {
+
         private String text;
         private Matrix textToUserSpaceTransformMatrix;
         private GraphicsState gs;
@@ -66,7 +68,7 @@ namespace iTextSharp.text.pdf.parser {
          * @since 5.0.2
          */
         private ICollection<MarkedContentInfo> markedContentInfos;
-        
+
         /**
          * Creates a new TextRenderInfo object
          * @param text the text that should be displayed
@@ -74,12 +76,14 @@ namespace iTextSharp.text.pdf.parser {
          * @param textMatrix the text matrix at the time of the render operation
          * @param markedContentInfo the marked content sequence, if available
          */
-        internal TextRenderInfo(String text, GraphicsState gs, Matrix textMatrix, ICollection markedContentInfo) {
+        internal TextRenderInfo(String text, GraphicsState gs, Matrix textMatrix, ICollection markedContentInfo)
+        {
             this.text = text;
             this.textToUserSpaceTransformMatrix = textMatrix.Multiply(gs.ctm);
             this.gs = gs;
             this.markedContentInfos = new List<MarkedContentInfo>();
-            foreach (MarkedContentInfo m in markedContentInfo) {
+            foreach (MarkedContentInfo m in markedContentInfo)
+            {
                 this.markedContentInfos.Add(m);
             }
         }
@@ -98,13 +102,15 @@ namespace iTextSharp.text.pdf.parser {
             this.gs = parent.gs;
             this.markedContentInfos = parent.markedContentInfos;
         }
-        
+
         /**
          * @return the text to render
          */
-        virtual public String GetText(){ 
-            return text; 
+        virtual public String GetText()
+        {
+            return text;
         }
+        public String Text { get { return this.GetText(); } }
 
         /**
          * Checks if the text belongs to a marked content sequence
@@ -113,9 +119,10 @@ namespace iTextSharp.text.pdf.parser {
          * @return true if the text is marked with this id
          * @since 5.0.2
          */
-        virtual public bool HasMcid(int mcid) {
+        virtual public bool HasMcid(int mcid)
+        {
             return HasMcid(mcid, false);
-	    }
+        }
 
         /**
 	     * Checks if the text belongs to a marked content sequence
@@ -125,14 +132,20 @@ namespace iTextSharp.text.pdf.parser {
          * @return true if the text is marked with this id
          * @since 5.3.5
          */
-        virtual public bool HasMcid(int mcid, bool checkTheTopmostLevelOnly) {
-            if (checkTheTopmostLevelOnly) {
-                if (markedContentInfos is IList) {
+        virtual public bool HasMcid(int mcid, bool checkTheTopmostLevelOnly)
+        {
+            if (checkTheTopmostLevelOnly)
+            {
+                if (markedContentInfos is IList)
+                {
                     int? infoMcid = GetMcid();
                     return (infoMcid != null) ? infoMcid == mcid : false;
                 }
-            } else {
-                foreach (MarkedContentInfo info in markedContentInfos) {
+            }
+            else
+            {
+                foreach (MarkedContentInfo info in markedContentInfos)
+                {
                     if (info.HasMcid())
                         if (info.GetMcid() == mcid)
                             return true;
@@ -144,8 +157,10 @@ namespace iTextSharp.text.pdf.parser {
         /**
          * @return the marked content associated with the TextRenderInfo instance.
          */
-        virtual public int? GetMcid() {
-            if (markedContentInfos is IList) {
+        virtual public int? GetMcid()
+        {
+            if (markedContentInfos is IList)
+            {
                 IList<MarkedContentInfo> mci = (IList<MarkedContentInfo>)markedContentInfos;
                 // Java and C# Stack classes have different numeration direction, so top element of the stack is 
                 // at last postion in Java and at first position in C#
@@ -154,23 +169,28 @@ namespace iTextSharp.text.pdf.parser {
             }
             return null;
         }
+        public int? Mcid { get { return this.GetMcid(); } }
 
         /**
          * @return the unscaled (i.e. in Text space) width of the text
          */
-        internal float GetUnscaledWidth(){ 
-            return GetStringWidth(text); 
+        internal float GetUnscaledWidth()
+        {
+            return GetStringWidth(text);
         }
-        
+        public float UnscaledWidth { get { return this.GetUnscaledWidth(); } }
+
         /**
          * Gets the baseline for the text (i.e. the line that the text 'sits' on)
          * This value includes the Rise of the draw operation - see {@link #getRise()} for the amount added by Rise
          * @return the baseline line segment
          * @since 5.0.2
          */
-        virtual public LineSegment GetBaseline(){
+        virtual public LineSegment GetBaseline()
+        {
             return GetUnscaledBaselineWithOffset(0 + gs.rise).TransformBy(textToUserSpaceTransformMatrix);
         }
+        public LineSegment Baseline { get { return this.GetBaseline(); } }
 
         /**
          * Gets the ascentline for the text (i.e. the line that represents the topmost extent that a string of the current font could have)
@@ -178,10 +198,12 @@ namespace iTextSharp.text.pdf.parser {
          * @return the ascentline line segment
          * @since 5.0.2
          */
-        virtual public LineSegment GetAscentLine(){
+        virtual public LineSegment GetAscentLine()
+        {
             float ascent = gs.GetFont().GetFontDescriptor(BaseFont.ASCENT, gs.GetFontSize());
             return GetUnscaledBaselineWithOffset(ascent + gs.rise).TransformBy(textToUserSpaceTransformMatrix);
         }
+        public LineSegment AscentLine { get { return this.GetAscentLine(); } }
 
         /**
          * Gets the descentline for the text (i.e. the line that represents the bottom most extent that a string of the current font could have)
@@ -189,13 +211,16 @@ namespace iTextSharp.text.pdf.parser {
          * @return the descentline line segment
          * @since 5.0.2
          */
-        virtual public LineSegment GetDescentLine(){
+        virtual public LineSegment GetDescentLine()
+        {
             // per GetFontDescription() API, descent is returned as a negative number, so we apply that as a normal vertical offset
             float descent = gs.GetFont().GetFontDescriptor(BaseFont.DESCENT, gs.GetFontSize());
             return GetUnscaledBaselineWithOffset(descent + gs.rise).TransformBy(textToUserSpaceTransformMatrix);
         }
-        
-        private LineSegment GetUnscaledBaselineWithOffset(float yOffset){
+        public LineSegment DescentLine { get { return this.GetDescentLine(); } }
+
+        private LineSegment GetUnscaledBaselineWithOffset(float yOffset)
+        {
             // we need to correct the width so we don't have an extra character spacing value at the end.  The extra character space is important for tracking relative text coordinate systems, but should not be part of the baseline
             float correctedUnscaledWidth = GetUnscaledWidth() - gs.characterSpacing * gs.horizontalScaling;
 
@@ -207,9 +232,11 @@ namespace iTextSharp.text.pdf.parser {
          * @return the font
          * @since iText 5.0.2
          */
-        virtual public DocumentFont GetFont() {
+        virtual public DocumentFont GetFont()
+        {
             return gs.GetFont();
         }
+        public DocumentFont Font { get { return this.GetFont(); } }
 
 
         // removing - this shouldn't be needed now that we are exposing getCharacterRenderInfos()
@@ -241,6 +268,7 @@ namespace iTextSharp.text.pdf.parser {
 
             return ConvertHeightFromTextSpaceToUserSpace(gs.rise);
         }
+        public float Rise { get { return this.GetRise(); } }
 
         /**
          * 
@@ -268,15 +296,17 @@ namespace iTextSharp.text.pdf.parser {
             return userSpace.GetLength();
         }
 
-	
+
 
         /**
          * @return The width, in user space units, of a single space character in the current font
          */
-        virtual public float GetSingleSpaceWidth(){
+        virtual public float GetSingleSpaceWidth()
+        {
             return ConvertWidthFromTextSpaceToUserSpace(GetUnscaledFontSpaceWidth());
         }
-        
+        public float SingleSpaceWidth { get { return this.GetSingleSpaceWidth(); } }
+
         /**
          * @return the text render mode that should be used for the text.  From the
          * PDF specification, this means:
@@ -292,54 +322,64 @@ namespace iTextSharp.text.pdf.parser {
          * </ul>
          * @since iText 5.0.1
          */
-        virtual public int GetTextRenderMode(){
+        virtual public int GetTextRenderMode()
+        {
             return gs.renderMode;
         }
+        public int TextRenderMode { get { return this.GetTextRenderMode(); } }
 
         /**
          * Returns the current fill color.
          * @param a BaseColor
          */
-        virtual public BaseColor GetFillColor() {
+        virtual public BaseColor GetFillColor()
+        {
             return gs.fillColor;
         }
+        public BaseColor FillColor { get { return this.GetFillColor(); } }
 
         /**
          * Returns the current stroke color.
          * @param a BaseColor
          */
-        virtual public BaseColor GetStrokeColor() {
+        virtual public BaseColor GetStrokeColor()
+        {
             return gs.strokeColor;
         }
-        
+        public BaseColor StrokeColor { get { return this.GetStrokeColor(); } }
+
         /**
          * Calculates the width of a space character.  If the font does not define
          * a width for a standard space character \u0020, we also attempt to use
          * the width of \u00A0 (a non-breaking space in many fonts)
          * @return the width of a single space character in text space units
          */
-        private float GetUnscaledFontSpaceWidth(){
+        private float GetUnscaledFontSpaceWidth()
+        {
             char charToUse = ' ';
             if (gs.font.GetWidth(charToUse) == 0)
                 charToUse = '\u00A0';
             return GetStringWidth(charToUse.ToString());
         }
-        
+        public float UnscaledFontSpaceWidth { get { return this.GetUnscaledFontSpaceWidth(); } }
+
         /**
          * Gets the width of a String in text space units
          * @param string    the string that needs measuring
          * @return  the width of a String in text space units
          */
-        private float GetStringWidth(String str){
+        private float GetStringWidth(String str)
+        {
             DocumentFont font = gs.font;
             char[] chars = str.ToCharArray();
             float totalWidth = 0;
-            for (int i = 0; i < chars.Length; i++) {
+            for (int i = 0; i < chars.Length; i++)
+            {
                 float w = font.GetWidth(chars[i]) / 1000.0f;
                 float wordSpacing = chars[i] == 32 ? gs.wordSpacing : 0f;
                 totalWidth += (w * gs.fontSize + gs.characterSpacing + wordSpacing) * gs.horizontalScaling;
             }
-            
+
             return totalWidth;
         }
 
@@ -369,5 +409,6 @@ namespace iTextSharp.text.pdf.parser {
 
             return rslt;
         }
+        public List<TextRenderInfo> CharacterRenderInfos { get { return this.GetCharacterRenderInfos(); } }
     }
 }

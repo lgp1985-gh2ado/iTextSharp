@@ -45,13 +45,15 @@ using iTextSharp.text.pdf;
  * For more information, please contact iText Software Corp. at this
  * address: sales@itextpdf.com
  */
-namespace iTextSharp.text.pdf.parser {
+namespace iTextSharp.text.pdf.parser
+{
 
     /**
      * Represents image data from a PDF
      * @since 5.0.1
      */
-    public class ImageRenderInfo {
+    public class ImageRenderInfo
+    {
         /** The coordinate transformation matrix that was in effect when the image was rendered */
         private Matrix ctm;
         /** A reference to the image XObject */
@@ -62,21 +64,23 @@ namespace iTextSharp.text.pdf.parser {
         private PdfDictionary colorSpaceDictionary;
         /** the image object to be rendered, if it has been parsed already.  Null otherwise. */
         private PdfImageObject imageObject = null;
-        
-        private ImageRenderInfo(Matrix ctm, PdfIndirectReference refi, PdfDictionary colorSpaceDictionary) {
+
+        private ImageRenderInfo(Matrix ctm, PdfIndirectReference refi, PdfDictionary colorSpaceDictionary)
+        {
             this.ctm = ctm;
             this.refi = refi;
             this.inlineImageInfo = null;
             this.colorSpaceDictionary = colorSpaceDictionary;
         }
 
-        private ImageRenderInfo(Matrix ctm, InlineImageInfo inlineImageInfo, PdfDictionary colorSpaceDictionary) {
+        private ImageRenderInfo(Matrix ctm, InlineImageInfo inlineImageInfo, PdfDictionary colorSpaceDictionary)
+        {
             this.ctm = ctm;
             this.refi = null;
             this.inlineImageInfo = inlineImageInfo;
             this.colorSpaceDictionary = colorSpaceDictionary;
         }
-        
+
         /**
          * Create an ImageRenderInfo object based on an XObject (this is the most common way of including an image in PDF)
          * @param ctm the coordinate transformation matrix at the time the image is rendered
@@ -84,10 +88,11 @@ namespace iTextSharp.text.pdf.parser {
          * @return the ImageRenderInfo representing the rendered XObject
          * @since 5.0.1
          */
-        public static ImageRenderInfo CreateForXObject(Matrix ctm, PdfIndirectReference refi, PdfDictionary colorSpaceDictionary){
+        public static ImageRenderInfo CreateForXObject(Matrix ctm, PdfIndirectReference refi, PdfDictionary colorSpaceDictionary)
+        {
             return new ImageRenderInfo(ctm, refi, colorSpaceDictionary);
         }
-        
+
         /**
          * Create an ImageRenderInfo object based on inline image data.  This is nowhere near completely thought through
          * and really just acts as a placeholder.
@@ -96,62 +101,77 @@ namespace iTextSharp.text.pdf.parser {
          * @return the ImageRenderInfo representing the rendered embedded image
          * @since 5.0.1
          */
-        protected internal static ImageRenderInfo CreateForEmbeddedImage(Matrix ctm, InlineImageInfo inlineImageInfo, PdfDictionary colorSpaceDictionary) {
+        protected internal static ImageRenderInfo CreateForEmbeddedImage(Matrix ctm, InlineImageInfo inlineImageInfo, PdfDictionary colorSpaceDictionary)
+        {
             ImageRenderInfo renderInfo = new ImageRenderInfo(ctm, inlineImageInfo, colorSpaceDictionary);
             return renderInfo;
         }
-        
+
         /**
          * Gets an object containing the image dictionary and bytes.
          * @return an object containing the image dictionary and byte[]
          * @since 5.0.2
          */
-        virtual public PdfImageObject GetImage() {
+        virtual public PdfImageObject GetImage()
+        {
             PrepareImageObject();
             return imageObject;
         }
-        
-        private void PrepareImageObject() {
+        public PdfImageObject Image { get { return this.GetImage(); } }
+
+        private void PrepareImageObject()
+        {
             if (imageObject != null)
                 return;
-            
-            if (refi != null){
+
+            if (refi != null)
+            {
                 PRStream stream = (PRStream)PdfReader.GetPdfObject(refi);
                 imageObject = new PdfImageObject(stream, colorSpaceDictionary);
-            } else if (inlineImageInfo != null){
+            }
+            else if (inlineImageInfo != null)
+            {
                 imageObject = new PdfImageObject(inlineImageInfo.ImageDictionary, inlineImageInfo.Samples, colorSpaceDictionary);
             }
         }
-        
+
         /**
          * @return a vector in User space representing the start point of the xobject
          */
-        virtual public Vector GetStartPoint(){ 
-            return new Vector(0, 0, 1).Cross(ctm); 
+        virtual public Vector GetStartPoint()
+        {
+            return new Vector(0, 0, 1).Cross(ctm);
         }
+        public Vector StartPoint { get { return this.GetStartPoint(); } }
 
         /**
          * @return The coordinate transformation matrix active when this image was rendered.  Coordinates are in User space.
          * @since 5.0.3
          */
-        virtual public Matrix GetImageCTM(){
+        virtual public Matrix GetImageCTM()
+        {
             return ctm;
         }
-        
+        public Matrix ImageCTM { get { return this.GetImageCTM(); } }
+
         /**
          * @return the size of the image, in User space units
          */
-        virtual public float GetArea(){
+        virtual public float GetArea()
+        {
             // the image space area is 1, so we multiply that by the determinant of the CTM to get the transformed area
             return ctm.GetDeterminant();
         }
-        
+        public float Area { get { return this.GetArea(); } }
+
         /**
          * @return an indirect reference to the image
          * @since 5.0.2
          */
-        virtual public PdfIndirectReference GetRef() {
+        virtual public PdfIndirectReference GetRef()
+        {
             return refi;
         }
+        public PdfIndirectReference Ref { get { return this.GetRef(); } }
     }
 }
