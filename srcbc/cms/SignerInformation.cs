@@ -272,7 +272,7 @@ namespace Org.BouncyCastle.Cms
 					*/
 					SignerInfo si = SignerInfo.GetInstance(asn1Obj.ToAsn1Object());
 
-					string digestName = CmsSignedHelper.Instance.GetDigestAlgName(si.DigestAlgorithm.ObjectID.Id);
+					string digestName = CmsSignedHelper.GetDigestAlgName(si.DigestAlgorithm.ObjectID.Id);
 
 					counterSignatures.Add(new SignerInformation(si, null, null, new CounterSignatureDigestCalculator(digestName, GetSignature())));
 				}
@@ -295,7 +295,7 @@ namespace Org.BouncyCastle.Cms
 		private bool DoVerify(
 			AsymmetricKeyParameter	key)
 		{
-			string digestName = Helper.GetDigestAlgName(this.DigestAlgOid);
+            string digestName = CmsSignedHelper.GetDigestAlgName(this.DigestAlgOid);
 			IDigest digest = Helper.GetDigestInstance(digestName);
 
 			DerObjectIdentifier sigAlgOid = this.encryptionAlgorithm.ObjectID;
@@ -345,9 +345,9 @@ namespace Org.BouncyCastle.Cms
 //				if (sigParams != null)
 //					throw new CmsException("unrecognised signature parameters provided");
 
-				string signatureName = digestName + "with" + Helper.GetEncryptionAlgName(this.EncryptionAlgOid);
+                string signatureName = digestName + "with" + CmsSignedHelper.GetEncryptionAlgName(this.EncryptionAlgOid);
 
-				sig = Helper.GetSignatureInstance(signatureName);
+                sig = CmsSignedHelper.GetSignatureInstance(signatureName);
 			}
 
 			try
@@ -515,7 +515,7 @@ namespace Org.BouncyCastle.Cms
 			AsymmetricKeyParameter	key,
 			byte[]					signature)
 		{
-			string algorithm = Helper.GetEncryptionAlgName(this.EncryptionAlgOid);
+            string algorithm = CmsSignedHelper.GetEncryptionAlgName(this.EncryptionAlgOid);
 
 			try
 			{

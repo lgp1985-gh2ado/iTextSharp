@@ -760,7 +760,7 @@ namespace iTextSharp.text.pdf {
          * @return the normalized encoding
          */
         protected static string NormalizeEncoding(string enc) {
-            if (enc.Equals("winansi") || enc.Equals(""))
+            if (enc.Equals("winansi") || string.IsNullOrEmpty(enc))
                 return CP1252;
             else if (enc.Equals("macroman"))
                 return MACROMAN;

@@ -127,13 +127,12 @@ namespace Org.BouncyCastle.Pkix
 
 		public override string ToString()
 		{
-			string nl = Platform.NewLine;
 			StringBuilder s = new StringBuilder();
-			s.Append("PkixBuilderParameters [" + nl);
+            s.Append("PkixBuilderParameters [" + Environment.NewLine);
 			s.Append(base.ToString());
 			s.Append("  Maximum Path Length: ");
 			s.Append(MaxPathLength);
-			s.Append(nl + "]" + nl);
+            s.Append(Environment.NewLine + "]" + Environment.NewLine);
 			return s.ToString();
 		}
 	}

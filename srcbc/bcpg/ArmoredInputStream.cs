@@ -44,7 +44,7 @@ namespace Org.BouncyCastle.Bcpg
         *
         * @return the offset the data starts in out.
         */
-        private int Decode(
+        private static int Decode(
             int      in0,
             int      in1,
             int      in2,
@@ -361,9 +361,9 @@ namespace Org.BouncyCastle.Bcpg
                     buffer[pos++] = (byte) c;
                 }
             }
-            catch (IOException ioe)
+            catch (IOException)
             {
-                if (pos == offset) throw ioe;
+                if (pos == offset) throw;
             }
 
 			return pos - offset;

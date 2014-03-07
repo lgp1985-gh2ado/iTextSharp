@@ -106,7 +106,7 @@ namespace Org.BouncyCastle.Cms
         * Return the digest algorithm using one of the standard JCA string
         * representations rather than the algorithm identifier (if possible).
         */
-        internal string GetDigestAlgName(
+        internal static string GetDigestAlgName(
             string digestAlgOid)
         {
 			string algName = (string)digestAlgs[digestAlgOid];
@@ -119,7 +119,7 @@ namespace Org.BouncyCastle.Cms
 			return digestAlgOid;
         }
 
-		internal string[] GetDigestAliases(
+		internal static string[] GetDigestAliases(
 			string algName)
 		{
 			string[] aliases = (string[]) digestAliases[algName];
@@ -132,7 +132,7 @@ namespace Org.BouncyCastle.Cms
         * JCA string representations rather than the algorithm identifier (if
         * possible).
         */
-        internal string GetEncryptionAlgName(
+        internal static string GetEncryptionAlgName(
             string encryptionAlgOid)
         {
 			string algName = (string) encryptionAlgs[encryptionAlgOid];
@@ -165,13 +165,13 @@ namespace Org.BouncyCastle.Cms
 			}
 		}
 
-		internal ISigner GetSignatureInstance(
+		internal static ISigner GetSignatureInstance(
 			string algorithm)
 		{
 			return SignerUtilities.GetSigner(algorithm);
 		}
 
-		internal IX509Store CreateAttributeStore(
+		internal static IX509Store CreateAttributeStore(
 			string	type,
 			Asn1Set	certSet)
 		{

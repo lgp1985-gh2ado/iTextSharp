@@ -18,7 +18,7 @@ namespace Org.BouncyCastle.Crypto.Modes
     public class CcmBlockCipher
         : IAeadBlockCipher
     {
-        private static readonly int BlockSize = 16;
+        private const int BlockSize = 16;
 
         private readonly IBlockCipher	cipher;
         private readonly byte[]			macBlock;

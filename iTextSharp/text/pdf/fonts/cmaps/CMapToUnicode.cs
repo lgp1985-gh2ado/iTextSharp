@@ -122,7 +122,7 @@ namespace iTextSharp.text.pdf.fonts.cmaps {
             return result;
         }
 
-        private int ConvertToInt(String s) {
+        private static int ConvertToInt(String s) {
             UnicodeEncoding ue = new UnicodeEncoding(true, false);
             byte[] b = ue.GetBytes(s);
             int value = 0;

@@ -91,11 +91,10 @@ namespace Org.BouncyCastle.Bcpg
 
         private string          type;
 
-        private static readonly string	nl = Platform.NewLine;
-        private static readonly string	headerStart = "-----BEGIN PGP ";
-        private static readonly string	headerTail = "-----";
-        private static readonly string	footerStart = "-----END PGP ";
-        private static readonly string	footerTail = "-----";
+        private const string	headerStart = "-----BEGIN PGP ";
+        private const string	headerTail = "-----";
+        private const string	footerStart = "-----END PGP ";
+        private const string	footerTail = "-----";
 
         private static readonly string version = "BCPG C# v"
 			+ Assembly.GetExecutingAssembly().GetName().Version;
@@ -174,8 +173,8 @@ namespace Org.BouncyCastle.Bcpg
                 throw new IOException("unknown hash algorithm tag in beginClearText: " + hashAlgorithm);
             }
 
-			DoWrite("-----BEGIN PGP SIGNED MESSAGE-----" + nl);
-            DoWrite("Hash: " + hash + nl + nl);
+            DoWrite("-----BEGIN PGP SIGNED MESSAGE-----" + Environment.NewLine);
+            DoWrite("Hash: " + hash + Environment.NewLine + Environment.NewLine);
 
 			clearText = true;
             newLine = true;
@@ -244,7 +243,7 @@ namespace Org.BouncyCastle.Bcpg
 				    break;
                 }
 
-                DoWrite(headerStart + type + headerTail + nl);
+                DoWrite(headerStart + type + headerTail + Environment.NewLine);
                 WriteHeaderEntry("Version", (string) headers["Version"]);
 
                 foreach (DictionaryEntry de in headers)
@@ -257,7 +256,7 @@ namespace Org.BouncyCastle.Bcpg
                     }
                 }
 
-                DoWrite(nl);
+                DoWrite(Environment.NewLine);
 
                 start = false;
             }
@@ -268,7 +267,7 @@ namespace Org.BouncyCastle.Bcpg
                 bufPtr = 0;
                 if ((++chunkCount & 0xf) == 0)
                 {
-                    DoWrite(nl);
+                    DoWrite(Environment.NewLine);
                 }
             }
 
@@ -289,7 +288,7 @@ namespace Org.BouncyCastle.Bcpg
 					Encode(outStream, buf, bufPtr);
 				}
 
-                DoWrite(nl + '=');
+                DoWrite(Environment.NewLine + '=');
 
                 int crcV = crc.Value;
 
@@ -299,11 +298,11 @@ namespace Org.BouncyCastle.Bcpg
 
                 Encode(outStream, buf, 3);
 
-                DoWrite(nl);
+                DoWrite(Environment.NewLine);
                 DoWrite(footerStart);
                 DoWrite(type);
                 DoWrite(footerTail);
-                DoWrite(nl);
+                DoWrite(Environment.NewLine);
 
                 outStream.Flush();
 
@@ -317,7 +316,7 @@ namespace Org.BouncyCastle.Bcpg
 			string	name,
 			string	v)
         {
-            DoWrite(name + ": " + v + nl);
+            DoWrite(name + ": " + v + Environment.NewLine);
         }
 
 		private void DoWrite(

@@ -42,7 +42,7 @@ namespace Org.BouncyCastle.Cms
 		{
 			byte[] keyBytes = contentEncryptionKey.GetKey();
 
-			string rfc3211WrapperName = Helper.GetRfc3211WrapperName(keyEncryptionKeyOID);
+            string rfc3211WrapperName = CmsEnvelopedHelper.GetRfc3211WrapperName(keyEncryptionKeyOID);
 			IWrapper keyWrapper = Helper.CreateWrapper(rfc3211WrapperName);
 
 			// Note: In Java build, the IV is automatically generated in JCE layer

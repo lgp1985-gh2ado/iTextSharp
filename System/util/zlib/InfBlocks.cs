@@ -122,7 +122,7 @@ namespace System.util.zlib {
             read=write=0;
 
             if(checkfn != null)
-                z.adler=check=z._adler.adler32(0L, null, 0, 0);
+                z.adler = check = Adler32.adler32(0L, null, 0, 0);
         }
 
         internal int proc(ZStream z, int r){
@@ -574,7 +574,7 @@ namespace System.util.zlib {
 
             // update check information
             if(checkfn != null)
-                z.adler=check=z._adler.adler32(check, window, q, n);
+                z.adler=check=Adler32.adler32(check, window, q, n);
 
             // copy as far as end of window
             System.Array.Copy(window, q, z.next_out, p, n);
@@ -599,7 +599,7 @@ namespace System.util.zlib {
 
                 // update check information
                 if(checkfn != null)
-                    z.adler=check=z._adler.adler32(check, window, q, n);
+                    z.adler=check=Adler32.adler32(check, window, q, n);
 
                 // copy
                 System.Array.Copy(window, q, z.next_out, p, n);

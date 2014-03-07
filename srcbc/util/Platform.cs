@@ -17,23 +17,6 @@ namespace Org.BouncyCastle.Utilities
 		{
 		}
 
-#if NETCF_1_0 || NETCF_2_0
-		private static string GetNewLine()
-		{
-			MemoryStream buf = new MemoryStream();
-			StreamWriter w = new StreamWriter(buf, Encoding.UTF8);
-			w.WriteLine();
-			w.Close();
-			byte[] bs = buf.ToArray();
-            return Encoding.UTF8.GetString(bs, 0, bs.Length);
-		}
-#else
-        private static string GetNewLine()
-        {
-            return Environment.NewLine;
-        }
-#endif
-
         internal static int CompareIgnoreCase(string a, string b)
         {
 #if SILVERLIGHT
@@ -177,6 +160,5 @@ namespace Org.BouncyCastle.Utilities
             return s.ToUpper(CultureInfo.InvariantCulture);
         }
 
-        internal static readonly string NewLine = GetNewLine();
 	}
 }

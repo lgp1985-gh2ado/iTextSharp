@@ -267,7 +267,7 @@ namespace Org.BouncyCastle.Asn1
             return true;
         }
 
-        private Asn1Encodable GetCurrent(IEnumerator e)
+        private static Asn1Encodable GetCurrent(IEnumerator e)
         {
             Asn1Encodable encObj = (Asn1Encodable)e.Current;
 
@@ -281,7 +281,7 @@ namespace Org.BouncyCastle.Asn1
         /**
          * return true if a &lt;= b (arrays are assumed padded with zeros).
          */
-        private bool LessThanOrEqual(
+        private static bool LessThanOrEqual(
              byte[] a,
              byte[] b)
         {

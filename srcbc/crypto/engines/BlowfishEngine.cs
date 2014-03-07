@@ -295,10 +295,10 @@ namespace Org.BouncyCastle.Crypto.Engines
         // Useful constants
         //====================================
 
-        private static readonly int    ROUNDS = 16;
+        private const int    ROUNDS = 16;
         private const int    BLOCK_SIZE = 8;  // bytes = 64 bits
-        private static readonly int    SBOX_SK = 256;
-        private static readonly int    P_SZ = ROUNDS+2;
+        private const int    SBOX_SK = 256;
+        private const int    P_SZ = ROUNDS+2;
 
         private readonly uint[] S0, S1, S2, S3;     // the s-boxes
         private readonly uint[] P;                  // the p-array

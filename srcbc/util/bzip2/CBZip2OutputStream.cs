@@ -506,7 +506,7 @@ namespace Org.BouncyCastle.Apache.Bzip2
             BsFinishedWithStream();
         }
 
-        private void HbAssignCodes(int[] code, char[] length, int minLen,
+        private static void HbAssignCodes(int[] code, char[] length, int minLen,
                                     int maxLen, int alphaSize) {
             int n, vec, i;
 
@@ -548,8 +548,8 @@ namespace Org.BouncyCastle.Apache.Bzip2
                 int ch = (bsBuff >> 24);
                 try {
                     bsStream.WriteByte((byte)ch); // write 8-bit
-                } catch (IOException e) {
-                    throw e;
+                } catch (IOException) {
+                    throw;
                 }
                 bsBuff <<= 8;
                 bsLive -= 8;

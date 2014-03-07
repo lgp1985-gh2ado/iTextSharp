@@ -135,11 +135,10 @@ namespace Org.BouncyCastle.X509
 		public override string ToString()
 		{
 			StringBuilder buf = new StringBuilder();
-			string nl = Platform.NewLine;
 
-			buf.Append("        userCertificate: ").Append(this.SerialNumber).Append(nl);
-			buf.Append("         revocationDate: ").Append(this.RevocationDate).Append(nl);
-			buf.Append("      certificateIssuer: ").Append(this.GetCertificateIssuer()).Append(nl);
+			buf.Append("        userCertificate: ").Append(this.SerialNumber).Append(Environment.NewLine);
+			buf.Append("         revocationDate: ").Append(this.RevocationDate).Append(Environment.NewLine);
+			buf.Append("      certificateIssuer: ").Append(this.GetCertificateIssuer()).Append(Environment.NewLine);
 
 			X509Extensions extensions = c.Extensions;
 
@@ -148,7 +147,7 @@ namespace Org.BouncyCastle.X509
 				IEnumerator e = extensions.ExtensionOids.GetEnumerator();
 				if (e.MoveNext())
 				{
-					buf.Append("   crlEntryExtensions:").Append(nl);
+					buf.Append("   crlEntryExtensions:").Append(Environment.NewLine);
 
 					do
 					{
@@ -178,17 +177,17 @@ namespace Org.BouncyCastle.X509
 									buf.Append(oid.Id);
 									buf.Append(" value = ").Append(Asn1Dump.DumpAsString(obj));
 								}
-								buf.Append(nl);
+								buf.Append(Environment.NewLine);
 							}
 							catch (Exception)
 							{
 								buf.Append(oid.Id);
-								buf.Append(" value = ").Append("*****").Append(nl);
+								buf.Append(" value = ").Append("*****").Append(Environment.NewLine);
 							}
 						}
 						else
 						{
-							buf.Append(nl);
+							buf.Append(Environment.NewLine);
 						}
 					}
 					while (e.MoveNext());

@@ -89,17 +89,17 @@ namespace Org.BouncyCastle.Cms
 			get { return iterationCount; }
 		}
 
-		public string Algorithm
+		public static string Algorithm
 		{
 			get { return "PKCS5S2"; }
 		}
 
-		public string Format
+		public static string Format
 		{
 			get { return "RAW"; }
 		}
 
-		public byte[] GetEncoded()
+		public static byte[] GetEncoded()
 		{
 			return null;
 		}

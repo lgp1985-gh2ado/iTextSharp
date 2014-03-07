@@ -76,7 +76,7 @@ namespace Org.BouncyCastle.Asn1.X509
 		public override string ToString()
 		{
 			StringBuilder buf = new StringBuilder();
-			string sep = Platform.NewLine;
+            string sep = Environment.NewLine;
 
 			buf.Append("CRLDistPoint:");
 			buf.Append(sep);

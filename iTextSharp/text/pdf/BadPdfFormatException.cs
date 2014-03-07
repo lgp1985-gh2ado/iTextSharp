@@ -60,6 +60,7 @@ namespace iTextSharp.text.pdf
      * @see        PdfFont
      */
 
+    [SerializableAttribute]
     public class BadPdfFormatException : Exception
     {
         public BadPdfFormatException() : base() {}

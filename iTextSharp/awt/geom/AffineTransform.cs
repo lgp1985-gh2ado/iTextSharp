@@ -354,7 +354,7 @@ namespace iTextSharp.awt.geom
          * @param t2 - the AffineTransform object is a multiplier
          * @return an AffineTransform object that is a result of t1 multiplied by matrix t2. 
          */
-        AffineTransform Multiply(AffineTransform t1, AffineTransform t2) {
+        static AffineTransform Multiply(AffineTransform t1, AffineTransform t2) {
             return new AffineTransform(
                     t1.m00 * t2.m00 + t1.m10 * t2.m01,          // m00
                     t1.m00 * t2.m10 + t1.m10 * t2.m11,          // m01

@@ -243,7 +243,7 @@ namespace Org.BouncyCastle.Asn1
             return true;
         }
 
-        private Asn1Encodable GetCurrent(IEnumerator e)
+        private static Asn1Encodable GetCurrent(IEnumerator e)
         {
             Asn1Encodable encObj = (Asn1Encodable)e.Current;
 

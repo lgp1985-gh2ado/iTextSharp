@@ -344,7 +344,7 @@ namespace Org.BouncyCastle.Apache.Bzip2
             return (int) BsGetint();
         }
 
-        private void HbCreateDecodeTables(int[] limit, int[] basev,
+        private static void HbCreateDecodeTables(int[] limit, int[] basev,
                                         int[] perm, char[] length,
                                         int minLen, int maxLen, int alphaSize) {
             int pp, i, j, vec;

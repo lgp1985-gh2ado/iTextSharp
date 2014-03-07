@@ -119,24 +119,23 @@ namespace Org.BouncyCastle.Asn1.X509
 
 		public override string ToString()
 		{
-			string sep = Platform.NewLine;
 			StringBuilder buf = new StringBuilder();
 			buf.Append("DistributionPoint: [");
-			buf.Append(sep);
+			buf.Append(Environment.NewLine);
 			if (distributionPoint != null)
 			{
-				appendObject(buf, sep, "distributionPoint", distributionPoint.ToString());
+				appendObject(buf, Environment.NewLine, "distributionPoint", distributionPoint.ToString());
 			}
 			if (reasons != null)
 			{
-				appendObject(buf, sep, "reasons", reasons.ToString());
+				appendObject(buf, Environment.NewLine, "reasons", reasons.ToString());
 			}
 			if (cRLIssuer != null)
 			{
-				appendObject(buf, sep, "cRLIssuer", cRLIssuer.ToString());
+				appendObject(buf, Environment.NewLine, "cRLIssuer", cRLIssuer.ToString());
 			}
 			buf.Append("]");
-			buf.Append(sep);
+			buf.Append(Environment.NewLine);
 			return buf.ToString();
 		}
 

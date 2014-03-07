@@ -31,7 +31,7 @@ namespace Org.BouncyCastle.Cms
 		/**
         * Generate an object that contains an CMS Compressed Data
         */
-        public CmsCompressedData Generate(
+        public static CmsCompressedData Generate(
             CmsProcessable	content,
             string			compressionOid)
         {

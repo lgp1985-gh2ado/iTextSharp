@@ -123,7 +123,7 @@ namespace Org.BouncyCastle.Cms
 					try
 					{
 						string digestOid = id.ObjectID.Id;
-						string digestName = Helper.GetDigestAlgName(digestOid);
+                        string digestName = CmsSignedHelper.GetDigestAlgName(digestOid);
 
 						if (!this._digests.Contains(digestName))
 						{
@@ -220,7 +220,7 @@ namespace Org.BouncyCastle.Cms
 					while ((o = s.ReadObject()) != null)
 					{
 						SignerInfo info = SignerInfo.GetInstance(o.ToAsn1Object());
-						string digestName = Helper.GetDigestAlgName(
+                        string digestName = CmsSignedHelper.GetDigestAlgName(
 							info.DigestAlgorithm.ObjectID.Id);
 
 						byte[] hash = (byte[]) hashes[digestName];
@@ -255,7 +255,7 @@ namespace Org.BouncyCastle.Cms
 			{
 				PopulateCertCrlSets();
 
-				_attributeStore = Helper.CreateAttributeStore(type, _certSet);
+                _attributeStore = CmsSignedHelper.CreateAttributeStore(type, _certSet);
 			}
 
 			return _attributeStore;

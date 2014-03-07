@@ -196,7 +196,7 @@ namespace Org.BouncyCastle.Utilities.Zlib {
             avail_in-=len;
 
             if(dstate.noheader==0) {
-                adler=_adler.adler32(adler, next_in, next_in_index, len);
+                adler=Adler32.adler32(adler, next_in, next_in_index, len);
             }
             System.Array.Copy(next_in, next_in_index, buf, start, len);
             next_in_index  += len;

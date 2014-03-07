@@ -107,7 +107,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 			return (dataLength / 3) * 4 + ((modulus == 0) ? 0 : 4);
 		}
 
-		private bool ignore(
+		private static bool ignore(
 			char c)
 		{
 			return (c == '\n' || c =='\r' || c == '\t' || c == ' ');

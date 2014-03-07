@@ -178,7 +178,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			}
 		}
 
-		private byte lRot8(byte v, int rot)
+		private static byte lRot8(byte v, int rot)
 		{
 			return (byte)(((uint)v << rot) | ((uint)v >> (8 - rot)));
 		}
@@ -241,7 +241,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			s[1] ^= leftRotate(u, 8);
 		}
 
-		private void camelliaFLs(uint[] s, uint[] fkey, int keyoff)
+		private static void camelliaFLs(uint[] s, uint[] fkey, int keyoff)
 		{
 			s[1] ^= leftRotate(s[0] & fkey[0 + keyoff], 1);
 			s[0] ^= fkey[1 + keyoff] | s[1];

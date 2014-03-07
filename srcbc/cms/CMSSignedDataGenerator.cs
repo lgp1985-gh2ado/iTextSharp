@@ -92,11 +92,11 @@ namespace Org.BouncyCastle.Cms
 				SecureRandom		random)
             {
                 AlgorithmIdentifier digAlgId = DigestAlgorithmID;
-				string digestName = Helper.GetDigestAlgName(digestOID);
+                string digestName = CmsSignedHelper.GetDigestAlgName(digestOID);
 				IDigest dig = Helper.GetDigestInstance(digestName);
 
-				string signatureName = digestName + "with" + Helper.GetEncryptionAlgName(encOID);
-				ISigner sig = Helper.GetSignatureInstance(signatureName);
+                string signatureName = digestName + "with" + CmsSignedHelper.GetEncryptionAlgName(encOID);
+                ISigner sig = CmsSignedHelper.GetSignatureInstance(signatureName);
 
 				// TODO Optimise the case where more than one signer with same digest
 				if (content != null)

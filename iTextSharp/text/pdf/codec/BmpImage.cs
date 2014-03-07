@@ -999,7 +999,7 @@ namespace iTextSharp.text.pdf.codec {
             return mask;
         }
         
-        private int FindShift(int mask) {
+        private static int FindShift(int mask) {
             int k = 0;
             for (; k < 32; ++k) {
                 if ((mask & 1) == 1)
@@ -1244,7 +1244,7 @@ namespace iTextSharp.text.pdf.codec {
         // Windows defined data type reading methods - everything is little endian
         
         // Unsigned 8 bits
-        private int ReadUnsignedByte(Stream stream) {
+        private static int ReadUnsignedByte(Stream stream) {
             return (stream.ReadByte() & 0xff);
         }
         

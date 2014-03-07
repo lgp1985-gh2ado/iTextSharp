@@ -51,7 +51,7 @@ namespace iTextSharp.text.io {
         
         public ArrayRandomAccessSource(byte[] array) {
             if (array == null) 
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("array");
             this.array = array;
         }
 

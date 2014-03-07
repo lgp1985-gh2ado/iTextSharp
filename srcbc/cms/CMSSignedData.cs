@@ -198,7 +198,7 @@ namespace Org.BouncyCastle.Cms
 		{
 			if (attrCertStore == null)
 			{
-				attrCertStore = Helper.CreateAttributeStore(type, signedData.Certificates);
+                attrCertStore = CmsSignedHelper.CreateAttributeStore(type, signedData.Certificates);
 			}
 
 			return attrCertStore;

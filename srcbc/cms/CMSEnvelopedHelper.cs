@@ -34,7 +34,7 @@ namespace Org.BouncyCastle.Cms
 			BaseCipherNames.Add(CmsEnvelopedGenerator.Aes256Cbc,  "AES");
 		}
 
-		private string GetAsymmetricEncryptionAlgName(
+		private static string GetAsymmetricEncryptionAlgName(
 			string encryptionAlgOid)
 		{
 			if (Asn1.Pkcs.PkcsObjectIdentifiers.RsaEncryption.Id.Equals(encryptionAlgOid))
@@ -76,7 +76,7 @@ namespace Org.BouncyCastle.Cms
 			}
 		}
 
-		internal string GetRfc3211WrapperName(
+		internal static string GetRfc3211WrapperName(
 			string oid)
 		{
 			if (oid == null)
@@ -90,7 +90,7 @@ namespace Org.BouncyCastle.Cms
 			return alg + "RFC3211Wrap";
 		}
 
-		internal int GetKeySize(
+		internal static int GetKeySize(
 			string oid)
 		{
 			if (!KeySizes.Contains(oid))

@@ -192,37 +192,36 @@ namespace Org.BouncyCastle.Asn1.X509
 
 		public override string ToString()
 		{
-			string sep = Platform.NewLine;
 			StringBuilder buf = new StringBuilder();
 
 			buf.Append("IssuingDistributionPoint: [");
-			buf.Append(sep);
+			buf.Append(Environment.NewLine);
 			if (_distributionPoint != null)
 			{
-				appendObject(buf, sep, "distributionPoint", _distributionPoint.ToString());
+				appendObject(buf, Environment.NewLine, "distributionPoint", _distributionPoint.ToString());
 			}
 			if (_onlyContainsUserCerts)
 			{
-				appendObject(buf, sep, "onlyContainsUserCerts", _onlyContainsUserCerts.ToString());
+				appendObject(buf, Environment.NewLine, "onlyContainsUserCerts", _onlyContainsUserCerts.ToString());
 			}
 			if (_onlyContainsCACerts)
 			{
-				appendObject(buf, sep, "onlyContainsCACerts", _onlyContainsCACerts.ToString());
+				appendObject(buf, Environment.NewLine, "onlyContainsCACerts", _onlyContainsCACerts.ToString());
 			}
 			if (_onlySomeReasons != null)
 			{
-				appendObject(buf, sep, "onlySomeReasons", _onlySomeReasons.ToString());
+				appendObject(buf, Environment.NewLine, "onlySomeReasons", _onlySomeReasons.ToString());
 			}
 			if (_onlyContainsAttributeCerts)
 			{
-				appendObject(buf, sep, "onlyContainsAttributeCerts", _onlyContainsAttributeCerts.ToString());
+				appendObject(buf, Environment.NewLine, "onlyContainsAttributeCerts", _onlyContainsAttributeCerts.ToString());
 			}
 			if (_indirectCRL)
 			{
-				appendObject(buf, sep, "indirectCRL", _indirectCRL.ToString());
+				appendObject(buf, Environment.NewLine, "indirectCRL", _indirectCRL.ToString());
 			}
 			buf.Append("]");
-			buf.Append(sep);
+			buf.Append(Environment.NewLine);
 			return buf.ToString();
 		}
 

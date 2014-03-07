@@ -306,11 +306,11 @@ namespace Org.BouncyCastle.Utilities.Zlib {
             if(z==null || z.istate == null|| z.istate.mode != DICT0)
                 return Z_STREAM_ERROR;
 
-            if(z._adler.adler32(1L, dictionary, 0, dictLength)!=z.adler){
+            if(Adler32.adler32(1L, dictionary, 0, dictLength)!=z.adler){
                 return Z_DATA_ERROR;
             }
 
-            z.adler = z._adler.adler32(0, null, 0, 0);
+            z.adler = Adler32.adler32(0, null, 0, 0);
 
             if(length >= (1<<z.istate.wbits)){
                 length = (1<<z.istate.wbits)-1;

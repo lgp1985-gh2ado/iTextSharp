@@ -236,22 +236,22 @@ namespace Org.BouncyCastle.Pkix
 		public override string ToString()
 		{
 			// TODO Some of the sub-objects might not implement ToString() properly
-			string nl = Platform.NewLine;
+			
 			StringBuilder sb = new StringBuilder();
 			sb.Append("[");
-			sb.Append(nl);
+			sb.Append(Environment.NewLine);
 			if (this.pubKey != null)
 			{
-				sb.Append("  Trusted CA Public Key: ").Append(this.pubKey).Append(nl);
-				sb.Append("  Trusted CA Issuer Name: ").Append(this.caName).Append(nl);
+				sb.Append("  Trusted CA Public Key: ").Append(this.pubKey).Append(Environment.NewLine);
+				sb.Append("  Trusted CA Issuer Name: ").Append(this.caName).Append(Environment.NewLine);
 			}
 			else
 			{
-				sb.Append("  Trusted CA cert: ").Append(this.TrustedCert).Append(nl);
+				sb.Append("  Trusted CA cert: ").Append(this.TrustedCert).Append(Environment.NewLine);
 			}
 			if (nc != null)
 			{
-				sb.Append("  Name Constraints: ").Append(nc).Append(nl);
+				sb.Append("  Name Constraints: ").Append(nc).Append(Environment.NewLine);
 			}
 			return sb.ToString();
 		}

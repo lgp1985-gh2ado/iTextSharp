@@ -95,25 +95,25 @@ namespace Org.BouncyCastle.Cms
 				_encOID = encOID;
 				_sAttr = sAttr;
 				_unsAttr = unsAttr;
-				_encName = Helper.GetEncryptionAlgName(_encOID);
+                _encName = CmsSignedHelper.GetEncryptionAlgName(_encOID);
 
-				string digestName = Helper.GetDigestAlgName(_digestOID);
+                string digestName = CmsSignedHelper.GetDigestAlgName(_digestOID);
 				string signatureName = digestName + "with" + _encName;
 
 				if (_sAttr != null)
 				{
-            		_sig = Helper.GetSignatureInstance(signatureName);
+                    _sig = CmsSignedHelper.GetSignatureInstance(signatureName);
 				}
 				else
 				{
 					// Note: Need to use raw signatures here since we have already calculated the digest
 					if (_encName.Equals("RSA"))
 					{
-						_sig = Helper.GetSignatureInstance("RSA");
+                        _sig = CmsSignedHelper.GetSignatureInstance("RSA");
 					}
 					else if (_encName.Equals("DSA"))
 					{
-						_sig = Helper.GetSignatureInstance("NONEwithDSA");
+                        _sig = CmsSignedHelper.GetSignatureInstance("NONEwithDSA");
 					}
 					// TODO Add support for raw PSS
 //					else if (_encName.equals("RSAandMGF1"))
@@ -145,7 +145,7 @@ namespace Org.BouncyCastle.Cms
 			{
 				try
 				{
-					string digestName = Helper.GetDigestAlgName(_digestOID);
+                    string digestName = CmsSignedHelper.GetDigestAlgName(_digestOID);
 					string signatureName = digestName + "with" + _encName;
 
 //					AlgorithmIdentifier digAlgId = DigestAlgorithmID;
@@ -611,7 +611,7 @@ namespace Org.BouncyCastle.Cms
 		{
        		RegisterDigestOid(digestOid);
 
-       		string digestName = Helper.GetDigestAlgName(digestOid);
+            string digestName = CmsSignedHelper.GetDigestAlgName(digestOid);
 			IDigest dig = (IDigest)_messageDigests[digestName];
 			if (dig == null)
 			{
@@ -725,7 +725,7 @@ namespace Org.BouncyCastle.Cms
             return new DerInteger(1);
         }
 
-		private bool CheckForVersion3(
+		private static bool CheckForVersion3(
 			IList signerInfos)
 		{
 			foreach (SignerInformation si in signerInfos)
@@ -858,7 +858,7 @@ namespace Org.BouncyCastle.Cms
 						AlgorithmIdentifier digestAlgorithm = holder.DigestAlgorithm;
 
 						byte[] calculatedDigest = (byte[])outer._messageHashes[
-							Helper.GetDigestAlgName(holder.digestOID)];
+                            CmsSignedHelper.GetDigestAlgName(holder.digestOID)];
 						outer._digests[holder.digestOID] = calculatedDigest.Clone();
 
 						signerInfos.Add(holder.signerInf.Generate(_contentOID, digestAlgorithm, calculatedDigest));

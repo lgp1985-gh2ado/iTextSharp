@@ -183,14 +183,14 @@ namespace Org.BouncyCastle.X509
 			}
 		}
 
-		private GeneralNames GenerateGeneralNames(
+		private static GeneralNames GenerateGeneralNames(
 			X509Name principal)
 		{
 //			return GeneralNames.GetInstance(new DerSequence(new GeneralName(principal)));
 			return new GeneralNames(new GeneralName(principal));
 		}
 
-		private bool MatchesDN(
+		private static bool MatchesDN(
 			X509Name		subject,
 			GeneralNames	targets)
 		{
@@ -218,7 +218,7 @@ namespace Org.BouncyCastle.X509
 			return false;
 		}
 
-		private object[] GetNames(
+		private static object[] GetNames(
 			GeneralName[] names)
 		{
             int count = 0;
@@ -247,7 +247,7 @@ namespace Org.BouncyCastle.X509
 		private X509Name[] GetPrincipals(
 			GeneralNames names)
 		{
-			object[] p = this.GetNames(names.GetNames());
+			object[] p = GetNames(names.GetNames());
 
             int count = 0;
 
